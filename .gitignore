@@ -1,0 +1,6 @@
+/venv
+log.txt
+price_db.csv
+text_db.csv
+**/__pycache__/
+/.idea
