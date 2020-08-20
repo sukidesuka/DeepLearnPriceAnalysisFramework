@@ -39,7 +39,7 @@ class InvestingSilverPriceScanner(ScriptTask):
             task = self.global_share.scanner_manager.ask_task(url, headers=headers, post=True, data=data)
             task.acquire()
 
-            self.global_share.log.write('year{} silver price success'.format(i))
+            self.global_share.log.write('SILVER PRICE year {} success'.format(i))
 
             html = etree.HTML(task.response.text)
 

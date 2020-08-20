@@ -39,7 +39,7 @@ class InvestingCopperPriceScanner(ScriptTask):
             task = self.global_share.scanner_manager.ask_task(url, headers=headers, post=True, data=data)
             task.acquire()
 
-            self.global_share.log.write('year{} gold price success'.format(i))
+            self.global_share.log.write('COPPER PRICE year {} success'.format(i))
 
             html = etree.HTML(task.response.text)
 
@@ -91,11 +91,11 @@ class InvestingCopperPriceScanner(ScriptTask):
             # 將數據塞入數據庫
             for row in df.values:
                 # 表頭為 ['Date', 'Price', 'Open', 'High', 'Low', 'Vol.', 'Change %']
-                self.global_share.price_db.insert(row[0], 'gold', 'price', row[1], save_to_file=False)
-                self.global_share.price_db.insert(row[0], 'gold', 'open', row[2], save_to_file=False)
-                self.global_share.price_db.insert(row[0], 'gold', 'high', row[3], save_to_file=False)
-                self.global_share.price_db.insert(row[0], 'gold', 'low', row[4], save_to_file=False)
-                self.global_share.price_db.insert(row[0], 'gold', 'vol', row[5], save_to_file=False)
-                self.global_share.price_db.insert(row[0], 'gold', 'change', row[6], save_to_file=False)
+                self.global_share.price_db.insert(row[0], 'copper', 'price', row[1], save_to_file=False)
+                self.global_share.price_db.insert(row[0], 'copper', 'open', row[2], save_to_file=False)
+                self.global_share.price_db.insert(row[0], 'copper', 'high', row[3], save_to_file=False)
+                self.global_share.price_db.insert(row[0], 'copper', 'low', row[4], save_to_file=False)
+                self.global_share.price_db.insert(row[0], 'copper', 'vol', row[5], save_to_file=False)
+                self.global_share.price_db.insert(row[0], 'copper', 'change', row[6], save_to_file=False)
             self.global_share.price_db.save_to_file()
             i += 1

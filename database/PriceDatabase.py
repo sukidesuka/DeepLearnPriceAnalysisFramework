@@ -1,6 +1,10 @@
 from database.Database import Database
 import pandas as pd
 import numpy as np
+import typing
+
+def dateStr2Struct():
+    pass
 
 
 class PriceDatabase(Database):
@@ -15,7 +19,8 @@ class PriceDatabase(Database):
             self.path = path
             self.data = pd.read_csv(path)
             # 將csv文件按照日期降序排列
-            self.data.sort_values(by=['date_y', 'date_m', 'date_d'])
+            self.data = self.data.sort_values(by=['date_y', 'date_m', 'date_d'])
+            self.data = self.data.reset_index()
         except FileNotFoundError:
             self.data = pd.DataFrame(columns=['date_y', 'date_m', 'date_d'])
 
@@ -46,7 +51,7 @@ class PriceDatabase(Database):
                       (self.data['date_d'] == date_d), col] = value
         # 將新的數據寫到本地
         if save_to_file:
-            self.data.to_csv(self.path, index=False)
+            self.data.to_csv(self.path, index=False, encoding='utf-8')
 
         self.lock.release()
 
@@ -79,5 +84,5 @@ class PriceDatabase(Database):
         適合與insert的save_to_file=False聯合使用\n
         """
         self.lock.acquire()
-        self.data.to_csv(self.path, index=False)
+        self.data.to_csv(self.path, index=False, encoding='utf-8')
         self.lock.release()

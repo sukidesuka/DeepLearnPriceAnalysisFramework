@@ -1,0 +1,2 @@
+from learning.Network import FullConnectedNetwork
+from learning.Network import LSTMNetwork

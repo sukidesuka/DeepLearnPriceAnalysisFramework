@@ -64,25 +64,24 @@ class TextDatabase(Database):
                             (self.data['title'] == title) &
                             (self.data['author'] == author) &
                             (self.data['text'] == text), :].values
-
-        # 如果數據相同，但是日期不同，則更新日期
-        if len(res) != 0 and len(res_date) == 0:
-            self.data.loc[(self.data['name'] == name) &
-                          (self.data['title'] == title) &
-                          (self.data['author'] == author) &
-                          (self.data['text'] == text),
-                          ['date_y', 'date_m', 'date_d']] = [date_y, date_m, date_d]
+        try:
+            # 如果數據相同，但是日期不同，則更新日期
+            if len(res) != 0 and len(res_date) == 0:
+                self.data.loc[(self.data['name'] == name) &
+                              (self.data['title'] == title) &
+                              (self.data['author'] == author) &
+                              (self.data['text'] == text),
+                              ['date_y', 'date_m', 'date_d']] = [date_y, date_m, date_d]
+                return True
+            # 如果數據日期皆相同，則直接返回
+            elif len(res_date) != 0:
+                return False
+            # 數據日期都不同，直接插入新數據
+            else:
+                new_row = pd.DataFrame([[date_y, date_m, date_d, name, title, author, text]],
+                                       columns=self.data.columns)
+                self.data = self.data.append(new_row)
+                self.data.to_csv(self.path, index=False, encoding='utf-8')
+                return True
+        finally:
             self.lock.release()
-            return True
-        # 如果數據日期皆相同，則直接返回
-        elif len(res_date) != 0:
-            self.lock.release()
-            return False
-        # 數據日期都不同，直接插入新數據
-        else:
-            new_row = pd.DataFrame([[date_y, date_m, date_d, name, title, author, text]],
-                                   columns=self.data.columns)
-            self.data = self.data.append(new_row)
-            self.data.to_csv(self.path, index=False)
-            self.lock.release()
-            return True

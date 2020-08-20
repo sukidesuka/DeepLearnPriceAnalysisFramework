@@ -51,7 +51,7 @@ class ScannerManager(object):
 
             def run(self):
                 while True:
-                    time.sleep(1)
+                    time.sleep(1)        # 網路訪問的冷卻限制，避免頻繁訪問被封禁
                     task: HttpGetTask = self.queue.get()
                     proxies = {'http': 'http://127.0.0.1:8888',
                                'https': 'http://127.0.0.1:8888'}

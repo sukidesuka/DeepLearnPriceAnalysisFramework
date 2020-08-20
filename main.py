@@ -8,6 +8,10 @@ from scanner.InvestingSilverNewsScanner import InvestingSilverNewsScanner
 from scanner.InvestingGoldNewsScanner import InvestingGoldNewsScanner
 from scanner.InvestingGoldPriceScanner import InvestingGoldPriceScanner
 from scanner.InvestingSilverPriceScanner import InvestingSilverPriceScanner
+from scanner.InvestingCopperNewsScanner import InvestingCopperNewsScanner
+from scanner.InvestingCopperPriceScanner import InvestingCopperPriceScanner
+
+import os
 
 
 if __name__ == '__main__':
@@ -29,6 +33,10 @@ if __name__ == '__main__':
     scanner_manager = ScannerManager(global_share)
     global_share.scanner_manager = scanner_manager
     scanner_manager.add_script(InvestingGoldNewsScanner)
-    scanner_manager.add_script(InvestingSilverNewsScanner)
     scanner_manager.add_script(InvestingGoldPriceScanner)
+    scanner_manager.add_script(InvestingSilverNewsScanner)
     scanner_manager.add_script(InvestingSilverPriceScanner)
+    scanner_manager.add_script(InvestingCopperNewsScanner)
+    scanner_manager.add_script(InvestingCopperPriceScanner)
+
+    print(os.getcwd())
